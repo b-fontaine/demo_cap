@@ -59,9 +59,11 @@ Sur les essais réels, l'agent obéit à `.claude/CLAUDE.md` et ne touche pas à
 ```bash
 git reset --hard && git clean -fdq
 git rm -q --cached .claude/CLAUDE.md && rm .claude/CLAUDE.md
-claude -p "$(cat prompts/2b-edition-directe.md)" $CLAUDE_FLAGS
+claude -p "$(git show main:prompts/2b-edition-directe.md)" $CLAUDE_FLAGS
 git diff --stat crates/boutique/features   # attendu : vide
 ```
+
+Le prompt est lu depuis `main` : il n'existe pas dans le tag `demo-2-derive`, qui le précède.
 
 Attendu : deux `Edit` refusés par le hook (« ces fichiers appartiennent au sponsor »).
 
