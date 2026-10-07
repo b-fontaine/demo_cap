@@ -1,6 +1,6 @@
 # Séquence de démo
 
-Toutes les commandes se lancent depuis la racine du dépôt. Le minuteur suit le guide de présentation (25 minutes).
+Toutes les commandes se lancent depuis la racine du dépôt. 
 
 ## Répétition d'un seul coup
 
@@ -27,7 +27,7 @@ Les runs de l'agent salissent l'arbre de travail et `task demo:N` refuse de chan
 git reset --hard && git clean -fdq
 ```
 
-## Démo 1 — pas de mandat (2:00)
+## Démo 1 — pas de mandat
 
 ```bash
 task demo:1
@@ -35,9 +35,9 @@ task demo:1
 
 Attendu : `aucun mandat pour FEAT-043` (code 2, l'agent n'est pas lancé), puis `FEAT-042 : mandat valide, budget restant 2.00 $`.
 
-Phrase clé : « Pas de mandat : l'agent n'est même pas lancé. Zéro token dépensé. »
+Message à faire passer : « Pas de mandat : l'agent n'est même pas lancé. Zéro token dépensé. »
 
-## Démo 2 — dérive de spec (5:00)
+## Démo 2 — dérive de spec
 
 ```bash
 task demo:2
@@ -74,11 +74,11 @@ Le prompt est lu depuis `main` : il n'existe pas dans le tag `demo-2-derive`, qu
 
 Attendu : deux `Edit` refusés par le hook (« ces fichiers appartiennent au sponsor »).
 
-Phrase clé : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. »
+Message à faire passer : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. »
 
 Limite à dire : un interpréteur lancé par le shell contourne le hook. L'autorité est CODEOWNERS et la CI côté serveur.
 
-## Démo 3 — chemin légitime (10:00)
+## Démo 3 — chemin légitime
 
 ```bash
 git reset --hard && git clean -fdq
@@ -91,11 +91,11 @@ cargo run -q -p mandat-cli -- report
 
 Premier run réel : coût de 0,19 $, une seule ligne de ledger ajoutée, seul `crates/boutique/src/lib.rs` modifié. Le coût varie d'un run à l'autre : dis « quelques dizaines de centimes ».
 
-Phrase clé : « La spec a changé par la seule voie légitime : le sponsor. Et voici ce que cette feature a coûté, relié au commit. »
+Message à faire passer : « La spec a changé par la seule voie légitime : le sponsor. Et voici ce que cette feature a coûté, relié au commit. »
 
-Précise que la colonne `commit` désigne le commit de départ du run.
+La colonne `commit` est lue après le run : sans commit de l'agent, c'est le commit de départ.
 
-## Démo 4 — budget consommé (12:00)
+## Démo 4 — budget consommé
 
 ```bash
 git reset --hard && git clean -fdq

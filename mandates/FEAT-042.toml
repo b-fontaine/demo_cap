@@ -7,5 +7,5 @@ scenarios   = ["LIV-001", "LIV-002", "LIV-003"]
 budget_usd  = 2.00
 stop_when   = "budget consommé ou 3 runs sans scénario vert"
 owner       = "@b-fontaine"
-deadline    = "2026-10-15"
+deadline    = "2035-12-31"
 status      = "approved"
