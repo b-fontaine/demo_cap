@@ -17,3 +17,5 @@ Feature: Frais de livraison
     Given un panier de 120,00 €
     When je calcule les frais de livraison
     Then les frais sont de 0,00 €
+
+# test de protection de main (PR à fermer)
