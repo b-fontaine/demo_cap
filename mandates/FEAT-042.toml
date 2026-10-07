@@ -1,0 +1,11 @@
+id          = "FEAT-042"
+title       = "Livraison offerte dès 40 €"
+sponsor     = "@b-fontaine"
+objective   = "Augmenter la conversion des paniers entre 40 et 50 €"
+metric      = "taux de conversion des paniers 40-50 €"
+scenarios   = ["LIV-001", "LIV-002", "LIV-003"]
+budget_usd  = 2.00
+stop_when   = "budget consommé ou 3 runs sans scénario vert"
+owner       = "@b-fontaine"
+deadline    = "2026-10-15"
+status      = "approved"

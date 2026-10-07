@@ -1,0 +1,12 @@
+# DONNÉES SYNTHÉTIQUES : ce mandat et son ledger illustrent un budget presque consommé.
+id          = "FEAT-041"
+title       = "Message d'avertissement sous le seuil de livraison"
+sponsor     = "@b-fontaine"
+objective   = "Informer le client du montant restant avant la livraison offerte"
+metric      = "taux d'ajout au panier après affichage du message"
+scenarios   = ["LIV-001"]
+budget_usd  = 2.00
+stop_when   = "budget consommé ou 3 runs sans scénario vert"
+owner       = "@b-fontaine"
+deadline    = "2026-10-31"
+status      = "approved"

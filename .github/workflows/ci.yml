@@ -8,5 +8,5 @@ jobs:
         with: { fetch-depth: 0 }
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo test --workspace
-      # P1 : à activer par l'intégrateur une fois `mandat check` livré.
-      # - run: cargo run -q -p mandat-cli -- check --branch "${{ github.head_ref }}"
+      # Garde-fou mandat : le mandat de la feature en cours doit rester valide.
+      - run: cargo run -q -p mandat-cli -- check FEAT-042
