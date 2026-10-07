@@ -5,13 +5,15 @@
 ## Démarrage en 2 commandes
 
 ```bash
-make ci        # tests unitaires + scénarios BDD
-make demo-1    # l'agent refuse de démarrer sans mandat
+task ci        # tests unitaires + scénarios BDD
+task demo:1    # l'agent refuse de démarrer sans mandat
 ```
 
 ## Les démos
 
-Chaque démo part d'un tag git propre et se rejoue à froid avec `make demo-N`, qui remet aussi le ledger à son état versionné.
+`task demo:all` joue les quatre démos avec l'agent réel (environ 0,6 $) et affiche la description des démos, puis un bilan des durées, coûts et résultats. `task demo:all:offline` fait de même sans appeler l'agent, et `task demo:list` décrit les démos. Le script travaille dans un worktree jetable : votre arbre de travail n'est pas touché.
+
+Chaque démo part d'un tag git propre et se rejoue à froid avec `task demo:N`, qui remet aussi le ledger à son état versionné.
 
 | Démo | Tag | Ce qu'elle montre |
 | --- | --- | --- |

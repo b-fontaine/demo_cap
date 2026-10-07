@@ -1,0 +1,86 @@
+# Démos rejouables à froid : chaque tâche demo:N se place sur son tag git.
+# `task demo:N` ne lance jamais l'agent tout seul, sauf demo:1 (déterministe).
+# `task demo:all` joue les quatre démos avec l'agent réel et affiche le bilan.
+version: '3'
+
+vars:
+  MANDAT: cargo run -q -p mandat-cli --
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task --list
+
+  ci:
+    desc: Tests unitaires et scénarios BDD
+    cmds:
+      - cargo test --workspace
+
+  _goto:
+    internal: true
+    requires:
+      vars: [TAG]
+    cmds:
+      - git checkout -q -- ledger
+      - git switch -q --detach {{.TAG}}
+      - git restore -q --source={{.TAG}} --worktree -- ledger
+      - git clean -fdq -- ledger
+
+  demo:list:
+    desc: Décrit les quatre démos
+    silent: true
+    cmds:
+      - bash scripts/demo-all.sh --list
+
+  demo:all:
+    desc: Joue toutes les démos avec l'agent réel et affiche durées, coûts et résultats (coût d'environ 0,6 $)
+    cmds:
+      - bash scripts/demo-all.sh
+
+  demo:all:offline:
+    desc: Joue toutes les démos sans appeler l'agent (aucun coût)
+    env:
+      DEMO_SKIP_AGENT: '1'
+    cmds:
+      - bash scripts/demo-all.sh
+
+  demo:0:
+    desc: Revient à l'état de base, tout est vert
+    cmds:
+      - task: _goto
+        vars: {TAG: demo-0-base}
+      - echo "Base verte. Lance task ci"
+
+  demo:1:
+    desc: Démo 1, pas de mandat, l'agent n'est pas lancé
+    cmds:
+      - task: _goto
+        vars: {TAG: demo-1-mandat}
+      - cmd: '{{.MANDAT}} run FEAT-043 --prompt prompts/0-sans-mandat.md'
+        ignore_error: true
+      - '{{.MANDAT}} check FEAT-042'
+
+  demo:2:
+    desc: Démo 2, dérive de spec (se place sur le tag, lance l'agent à la main)
+    cmds:
+      - task: _goto
+        vars: {TAG: demo-2-derive}
+      - echo 'Chemin 1 :' 'claude -p "$(cat prompts/1-code-seul.md)" puis task ci (rouge attendu)'
+      - echo 'Chemin 2 :' 'claude -p "$(cat prompts/2-faire-passer.md)"'
+      - echo 'Chemin 2 bis, hook :' 'voir docs/DEMO.md'
+
+  demo:3:
+    desc: Démo 3, chemin légitime (se place sur le tag, lance l'agent à la main)
+    cmds:
+      - task: _goto
+        vars: {TAG: demo-3-spec-approuvee}
+      - echo 'Lance :' '{{.MANDAT}} run FEAT-042 --prompt prompts/3-implementer.md' 'puis report'
+
+  demo:4:
+    desc: Démo 4, budget consommé
+    cmds:
+      - task: _goto
+        vars: {TAG: demo-4-budget}
+      - '{{.MANDAT}} report'
+      - echo 'Lance :' '{{.MANDAT}} run FEAT-041 --prompt prompts/3-implementer.md' '(refus code 3 attendu)'

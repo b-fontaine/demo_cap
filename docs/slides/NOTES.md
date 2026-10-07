@@ -10,10 +10,10 @@ Installation de l'écran : terminal en police 18 minimum, deux volets (agent à 
 | --- | --- | --- | --- |
 | 0:00 | Ouverture | Slide titre | « Un agent ne démarre rien sans mandat ni budget, ne livre rien que la spec n'autorise, et s'arrête quand son budget est consommé. » |
 | 1:00 | Le mandat | Slide des six éléments | « C'est la règle que j'applique à tout chantier depuis mon P&L chez Micropole. Je l'applique maintenant aux agents. » |
-| 2:00 | Démo 1 | `make demo-1`, `mandat run FEAT-043 …` puis `mandat check FEAT-042` | « Pas de mandat : l'agent n'est même pas lancé. Zéro token dépensé. » |
-| 5:00 | Démo 2 | `make demo-2`, prompt 1 puis prompt 2 | « La dérive des specs est le premier risque d'un agent de code. Voici ma réponse. » Puis : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. » |
-| 10:00 | Démo 3 | `make demo-3`, prompt 3, puis `mandat report` | « La spec a changé par la seule voie légitime : le sponsor. Et voici ce que cette feature a coûté, relié au commit. » |
-| 12:00 | Démo 4 | `make demo-4`, `mandat run FEAT-041 …` | « Budget consommé : arrêt net, nouveau mandat requis. Et j'ai appliqué la même règle à cette démo : le critère d'arrêt a été posé avant d'écrire la première ligne : ce qui n'était pas vert à l'heure dite sortait de la démo. » |
+| 2:00 | Démo 1 | `task demo:1`, `mandat run FEAT-043 …` puis `mandat check FEAT-042` | « Pas de mandat : l'agent n'est même pas lancé. Zéro token dépensé. » |
+| 5:00 | Démo 2 | `task demo:2`, prompt 1 puis prompt 2 | « La dérive des specs est le premier risque d'un agent de code. Voici ma réponse. » Puis : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. » |
+| 10:00 | Démo 3 | `task demo:3`, prompt 3, puis `mandat report` | « La spec a changé par la seule voie légitime : le sponsor. Et voici ce que cette feature a coûté, relié au commit. » |
+| 12:00 | Démo 4 | `task demo:4`, `mandat run FEAT-041 …` | « Budget consommé : arrêt net, nouveau mandat requis. Et j'ai appliqué la même règle à cette démo : le critère d'arrêt a été posé avant d'écrire la première ligne : ce qui n'était pas vert à l'heure dite sortait de la démo. » |
 | 14:00 | Recul | Slide des limites | Le hook est contournable, l'autorité est en CI. Les scénarios ne couvrent que le comportement spécifié : mutation testing pour le reste. Le jugement sémantique d'une spec reste consultatif |
 | 18:00 | Passage à l'échelle | `KATA.md` à l'écran, puis slide de la fiche du poste | « Ce repo est aussi un kata : chaque garde-fou est un exercice. C'est le format de mes bootcamps et de mes cours à l'IUT. » |
 | 21:00 | OneCraft | Slide des 4 piliers | Une phrase par pilier, sur la ligne « First 6 months » |

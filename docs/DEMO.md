@@ -2,6 +2,13 @@
 
 Toutes les commandes se lancent depuis la racine du dépôt. Le minuteur suit le guide de présentation (25 minutes).
 
+## Répétition d'un seul coup
+
+```bash
+task demo:all          # agent réel, environ 0,6 $ et 2 minutes ; bilan durées, coûts, résultats
+task demo:all:offline  # sans agent, aucun coût
+```
+
 ## Avant de commencer (une fois)
 
 ```bash
@@ -14,7 +21,7 @@ En mode non interactif, sans `--allowedTools`, l'agent s'arrête dès sa premiè
 
 ## Entre deux démos
 
-Les runs de l'agent salissent l'arbre de travail et `make demo-N` refuse de changer de tag si l'arbre est sale. Avant chaque démo :
+Les runs de l'agent salissent l'arbre de travail et `task demo:N` refuse de changer de tag si l'arbre est sale. Avant chaque démo :
 
 ```bash
 git reset --hard && git clean -fdq
@@ -23,7 +30,7 @@ git reset --hard && git clean -fdq
 ## Démo 1 — pas de mandat (2:00)
 
 ```bash
-make demo-1
+task demo:1
 ```
 
 Attendu : `aucun mandat pour FEAT-043` (code 2, l'agent n'est pas lancé), puis `FEAT-042 : mandat valide, budget restant 2.00 $`.
@@ -33,7 +40,7 @@ Phrase clé : « Pas de mandat : l'agent n'est même pas lancé. Zéro token dé
 ## Démo 2 — dérive de spec (5:00)
 
 ```bash
-make demo-2
+task demo:2
 ```
 
 **Chemin 1, code seul** (environ 0,20 $, 1 minute) :
@@ -75,7 +82,7 @@ Limite à dire : un interpréteur lancé par le shell contourne le hook. L'autor
 
 ```bash
 git reset --hard && git clean -fdq
-make demo-3
+task demo:3
 cargo test --workspace             # attendu : LIV-004 rouge, la spec a été amendée par le sponsor
 cargo run -q -p mandat-cli -- run FEAT-042 --prompt prompts/3-implementer.md
 cargo test --workspace             # attendu : 4 scénarios verts
@@ -92,7 +99,7 @@ Précise que la colonne `commit` désigne le commit de départ du run.
 
 ```bash
 git reset --hard && git clean -fdq
-make demo-4
+task demo:4
 cargo run -q -p mandat-cli -- run FEAT-041 --prompt prompts/3-implementer.md   # attendu : code 3
 ```
 
