@@ -4,3 +4,4 @@
 .DS_Store
 sources/
 docs/JOUR-J.md
+.firebase/
