@@ -1,0 +1,5 @@
+/target
+.idea/
+.omc/
+.DS_Store
+sources/
