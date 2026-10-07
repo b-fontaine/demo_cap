@@ -13,7 +13,7 @@ Installation de l'écran : terminal en police 18 minimum, deux volets (agent à 
 | 2:00 | Démo 1 | `make demo-1`, `mandat run FEAT-043 …` puis `mandat check FEAT-042` | « Pas de mandat : l'agent n'est même pas lancé. Zéro token dépensé. » |
 | 5:00 | Démo 2 | `make demo-2`, prompt 1 puis prompt 2 | « La dérive des specs est le premier risque d'un agent de code. Voici ma réponse. » Puis : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. » |
 | 10:00 | Démo 3 | `make demo-3`, prompt 3, puis `mandat report` | « La spec a changé par la seule voie légitime : le sponsor. Et voici ce que cette feature a coûté, relié au commit. » |
-| 12:00 | Démo 4 | `make demo-4`, `mandat run FEAT-041 …` | « Budget consommé : arrêt net, nouveau mandat requis. Et j'ai appliqué la même règle à cette démo : critère d'arrêt hier à 16h. » |
+| 12:00 | Démo 4 | `make demo-4`, `mandat run FEAT-041 …` | « Budget consommé : arrêt net, nouveau mandat requis. Et j'ai appliqué la même règle à cette démo : le critère d'arrêt a été posé avant d'écrire la première ligne : ce qui n'était pas vert à l'heure dite sortait de la démo. » |
 | 14:00 | Recul | Slide des limites | Le hook est contournable, l'autorité est en CI. Les scénarios ne couvrent que le comportement spécifié : mutation testing pour le reste. Le jugement sémantique d'une spec reste consultatif |
 | 18:00 | Passage à l'échelle | `KATA.md` à l'écran, puis slide de la fiche du poste | « Ce repo est aussi un kata : chaque garde-fou est un exercice. C'est le format de mes bootcamps et de mes cours à l'IUT. » |
 | 21:00 | OneCraft | Slide des 4 piliers | Une phrase par pilier, sur la ligne « First 6 months » |
@@ -38,13 +38,13 @@ Règles de conduite pendant la démo :
 
 - Six éléments, s'il en manque un le chantier ne démarre pas : sponsor, objectif mesurable, périmètre et critères d'acceptation, budget plafond, critère d'arrêt, owner et échéance.
 - Trois niveaux d'application : le groupe (assessment qui vaut mandat, budget IA explicite), la feature (mandat versionné dans le repo, coût réel lu face au budget), l'agent (refuse de démarrer sans mandat valide, s'arrête au plafond).
-- Appliqué à moi-même : la démo a été construite avec un critère d'arrêt fixé le 7 octobre à 16h. C'est la preuve que le principe est une pratique.
+- Appliqué à moi-même : la démo a été construite avec un critère d'arrêt fixé avant de coder, la veille de la soutenance. C'est la preuve que le principe est une pratique.
 - Preuve de la casquette CTO : P&L et équipe de consultants chez Micropole/Talan.
 - Si question sur le chiffrage : l'évitement de coût résiste à l'examen, pas les promesses de vélocité. Seule la mesure par feature est juste.
 
 ### Slide 3 : Cinq couches de garde-fous (rappel pendant la démo 2 et au recul)
 
-- Lire l'ordre, du plus faible au plus fort : CLAUDE.md (indicatif, ignorable), hook PreToolUse (bloquant pour cet outil, contournable par le shell), scénarios BDD (déterministe, sauf à modifier la spec), CODEOWNERS et protection de branche (revue humaine, sauf droits admin), `mandat check --all` en CI (déterministe : mandats complets, scénarios référencés existants ; contournable seulement en modifiant le workflow, ce que la revue des code owners attrape).
+- Lire l'ordre, du plus faible au plus fort : CLAUDE.md (indicatif, ignorable), hook PreToolUse (bloquant pour cet outil, contournable par le shell), scénarios BDD (déterministe, sauf à modifier la spec), CODEOWNERS et protection de branche (revue humaine, sauf droits admin), `mandat check` en CI (déterministe : mandats complets, scénarios référencés existants ; contournable seulement en modifiant le workflow, ce que la revue des code owners attrape).
 - Message : l'instruction est un souhait, le hook est un confort, la CI et la revue sont l'autorité.
 - Phrase d'ancrage tech lead : « Je ne contrôle pas ce que fait l'agent. Je contrôle les états dans lesquels il peut finir. »
 - Preuve (parcours déclaré, à détailler à l'oral) : craft non négociable (TDD, BDD, clean architecture) chez AXA France.

@@ -8,8 +8,10 @@ ci:
 	cargo test --workspace
 
 define goto
+	@git checkout -q -- ledger
 	git switch -q --detach $(1)
 	git restore -q --source=$(1) --worktree -- ledger
+	git clean -fdq -- ledger
 endef
 
 demo-0:

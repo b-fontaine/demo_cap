@@ -196,11 +196,12 @@ fn hook(r: &Repo, event: Value) -> Value {
         .get_output()
         .stdout
         .clone();
-    serde_json::from_slice(&out).unwrap()
+    if out.is_empty() { Value::Null } else { serde_json::from_slice(&out).unwrap() }
 }
 
+// Silence (Null) = pas de décision = les règles de permission habituelles s'appliquent.
 fn decision(v: &Value) -> &str {
-    v["hookSpecificOutput"]["permissionDecision"].as_str().unwrap()
+    v["hookSpecificOutput"]["permissionDecision"].as_str().unwrap_or("allow")
 }
 
 #[test]
@@ -236,7 +237,7 @@ fn hook_autorise_le_reste() {
     assert_eq!(decision(&lecture), "allow");
     // Entrée illisible : on n'invente pas de refus.
     let out = r.mandat().arg("hook").write_stdin("pas du json").assert().code(0).get_output().stdout.clone();
-    assert_eq!(decision(&serde_json::from_slice(&out).unwrap()), "allow");
+    assert!(out.is_empty(), "silence attendu pour une entrée illisible");
 }
 
 #[test]
@@ -247,6 +248,7 @@ fn hook_bash_refuse_ecritures_et_autorise_lectures() {
     for c in [
         "echo x > mandates/FEAT-042.toml",
         "echo x >> ledger/FEAT-042.jsonl",
+        "echo x>ledger/FEAT-042.jsonl",
         "sed -i s/a/b/ crates/boutique/features/livraison.feature",
         "rm -rf ./mandates",
         "cargo test && cp x ledger/y",

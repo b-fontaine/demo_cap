@@ -2,7 +2,7 @@
 //! `crates/boutique/features/`, `mandates/` et `ledger/`.
 //!
 //! Confort poste développeur, pas une autorité : l'autorité est la CI et CODEOWNERS.
-//! Réponse toujours en JSON sur stdout, code de sortie 0.
+//! Refus en JSON sur stdout ; silence quand rien n'est protégé. Code de sortie 0.
 
 use std::io::Read;
 use std::path::{Component, Path, PathBuf};
@@ -23,9 +23,8 @@ pub fn run(root_arg: &Path) -> i32 {
             "hookEventName": "PreToolUse",
             "permissionDecision": "deny",
             "permissionDecisionReason": reason}}),
-        None => json!({"hookSpecificOutput": {
-            "hookEventName": "PreToolUse",
-            "permissionDecision": "allow"}}),
+        // Rien à refuser : on n'émet rien, pour ne pas court-circuiter les invites de permission.
+        None => return 0,
     };
     println!("{out}");
     0
@@ -109,15 +108,15 @@ fn segment_writes_protected(seg: &str, base: &Path, root: &Path) -> bool {
     for (i, raw) in toks.iter().enumerate() {
         // Redirection dont la cible est protégée (lire un fichier protégé reste permis).
         if let Some(pos) = raw.find('>') {
-            let before = &raw[..pos];
-            if before.is_empty() || before.chars().all(|c| c.is_ascii_digit()) {
-                let after = raw[pos..].trim_start_matches('>');
-                let target = if after.is_empty() { toks.get(i + 1).copied().unwrap_or("") } else { after };
-                if is_protected(clean(target), base, root) {
-                    return true;
-                }
-                continue;
+            let after = raw[pos..].trim_start_matches('>');
+            let target = if after.is_empty() { toks.get(i + 1).copied().unwrap_or("") } else { after };
+            if is_protected(clean(target), base, root) {
+                return true;
             }
+            if !raw[..pos].is_empty() && !raw[..pos].chars().all(|c| c.is_ascii_digit()) {
+                has_protected |= is_protected(clean(&raw[..pos]), base, root);
+            }
+            continue;
         }
         if is_protected(clean(raw), base, root) {
             has_protected = true;
